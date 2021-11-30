@@ -6,6 +6,18 @@ app.use(express.json());
 
 const customers = [];
 
+function getBalance(statement) {
+  const balance = statement.reduce((acc, operation) => {
+    if (operation.type === 'credit') {
+      return acc + operation.amount;
+    }
+
+    return acc - operation.amount;
+  }, 0)
+
+  return balance;
+}
+
 // Middleware
 function verifyIfAccountExists(req, res, next) {
   const { cpf } = req.headers;
@@ -54,6 +66,25 @@ app.post("/deposit", verifyIfAccountExists, (req, res) => {
     description,
     amount,
     type: "credit",
+    created_at: new Date()
+  });
+
+  return res.status(201).send();
+})
+
+app.post("/withdraw", verifyIfAccountExists, (req, res) => {
+  const { amount } = req.body;
+  const { customer } = req;
+
+  const balance = getBalance(customer.statement);
+
+  if (balance < amount) {
+    return res.status(400).json({ error: "Insufficient funds" });
+  }
+
+  customer.statement.push({
+    amount,
+    type: "debit",
     created_at: new Date()
   });
 
