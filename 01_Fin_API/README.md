@@ -11,7 +11,7 @@
 - [ ] Deve ser possível obter dados da conta do cliente
 - [ ] Deve ser possível deletar uma conta
 
-## Regras de Negócio
+### Regras de Negócio
 
 - [ ] Não deve ser possível cadastrar um conta com CPF já existente
 - [ ] Não deve ser possível fazer depósito em uma conta não existente
