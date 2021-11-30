@@ -14,12 +14,16 @@ const customers = [];
  */
 app.post("/account", (req, res) => {
   const { cpf, name } = req.body;
-  const uid = randomUUID();
+  const customerAlreadyExists = customers.some(customer => customer.cpf === cpf);
+
+  if (customerAlreadyExists) {
+    return res.status(400).json({ error: "Customer already exists" });
+  }
 
   customers.push({
     cpf,
     name,
-    uid,
+    uid: randomUUID(),
     statement: []
   });
 
@@ -27,5 +31,5 @@ app.post("/account", (req, res) => {
 })
 
 
-app.listen(3333);
 
+app.listen(3333);
