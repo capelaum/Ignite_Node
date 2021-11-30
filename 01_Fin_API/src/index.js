@@ -48,7 +48,7 @@ app.post("/account", (req, res) => {
   });
 
   return res.status(201).send();
-})
+});
 
 // app.use(verifyIfAccountExists)
 
@@ -56,7 +56,7 @@ app.get("/statement", verifyIfAccountExists, (req, res) => {
   const { customer } = req;
 
   return res.json(customer.statement);
-})
+});
 
 app.post("/deposit", verifyIfAccountExists, (req, res) => {
   const { description, amount } = req.body;
@@ -70,7 +70,7 @@ app.post("/deposit", verifyIfAccountExists, (req, res) => {
   });
 
   return res.status(201).send();
-})
+});
 
 app.post("/withdraw", verifyIfAccountExists, (req, res) => {
   const { amount } = req.body;
@@ -89,6 +89,33 @@ app.post("/withdraw", verifyIfAccountExists, (req, res) => {
   });
 
   return res.status(201).send();
+});
+
+app.get("/statement/date", verifyIfAccountExists, (req, res) => {
+  const { customer } = req;
+  const { date } = req.query;
+
+  const dateFormat = new Date(date + " 00:00");
+  const statement = customer.statement.filter(
+    statement => statement.created_at.toDateString() === dateFormat.toDateString()
+  );
+
+  return res.json(statement);
+});
+
+app.put("/account", verifyIfAccountExists, (req, res) => {
+  const { name } = req.body;
+  const { customer } = req;
+
+  customer.name = name;
+
+  return res.status(201).send();
+});
+
+app.get("/account", verifyIfAccountExists, (req, res) => {
+  const { customer } = req;
+
+  return res.json(customer);
 })
 
 app.listen(3333);
