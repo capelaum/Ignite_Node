@@ -4,6 +4,13 @@ import { hash } from "bcrypt";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 
+interface IRequest {
+  name: string;
+  password: string;
+  email: string;
+  driver_license: string;
+}
+
 @injectable()
 class CreateUserUseCase {
   constructor(
@@ -16,7 +23,7 @@ class CreateUserUseCase {
     email,
     driver_license,
     password,
-  }: ICreateUserDTO): Promise<void> {
+  }: IRequest): Promise<void> {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExists) {
