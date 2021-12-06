@@ -34,9 +34,13 @@ export async function ensureAuthenticated(
     if (!user) {
       throw new AppError("User not found", 401);
     }
+
+    req.user = {
+      id: userId,
+    };
+
+    return next();
   } catch (error) {
     throw new AppError("Invalid Token", 401);
   }
-
-  return next();
 }
