@@ -37,7 +37,7 @@
 
 - [x] Não deve ser possível cadastrar uma especificação para um `carro não cadastrado`.
 - [x] Não deve ser possível cadastrar uma `especificação já existente para o mesmo carro`.
-- [ ] O usuário responsável pelo cadastro deve ser um usuário `administrador`.
+- [x] O usuário responsável pelo cadastro deve ser um usuário `administrador`.
 
 # Cadastro de imagens do carro
 
