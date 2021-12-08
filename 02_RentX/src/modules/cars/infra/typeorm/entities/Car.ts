@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   JoinColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { Category } from "./Category";
 import { randomUUID } from "crypto";
+import { Specification } from "./Specification";
 
 @Entity("cars")
 class Car {
@@ -41,6 +44,14 @@ class Car {
 
   @Column()
   category_id: string;
+
+  @ManyToMany(() => Specification)
+  @JoinTable({
+    name: "specifications_cars",
+    joinColumns: [{ name: "car_id" }],
+    inverseJoinColumns: [{ name: "specification_id" }],
+  })
+  specifications: Specification[];
 
   @CreateDateColumn()
   created_at: Date;
