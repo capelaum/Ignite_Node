@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto";
+
 class Car {
   id: string;
   name: string;
@@ -9,6 +11,14 @@ class Car {
   brand: string;
   category_id: string;
   created_at: Date;
+
+  constructor() {
+    if (!this.id) {
+      this.id = randomUUID();
+      this.available = true;
+      this.created_at = new Date();
+    }
+  }
 }
 
 export { Car };
