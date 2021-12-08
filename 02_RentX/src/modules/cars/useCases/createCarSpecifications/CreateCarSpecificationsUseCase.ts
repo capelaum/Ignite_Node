@@ -1,4 +1,4 @@
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
@@ -10,17 +10,20 @@ interface IRequest {
   specifications_id: string[];
 }
 
+@injectable()
 class CreateCarSpecificationsUseCase {
   constructor(
-    // @inject("CarsRepository")
+    @inject("CarsRepository")
     private carsRepository: ICarsRepository,
+
+    @inject("SpecificationsRepository")
     private specificationsRepository: ISpecificationsRepository
   ) {}
 
   async execute({ car_id, specifications_id }: IRequest): Promise<Car> {
-    const carExists = await this.carsRepository.findById(car_id);
+    const car = await this.carsRepository.findById(car_id);
 
-    if (!carExists) {
+    if (!car) {
       throw new AppError("Car does not exists");
     }
 
@@ -28,11 +31,11 @@ class CreateCarSpecificationsUseCase {
       specifications_id
     );
 
-    carExists.specifications = specifications;
+    car.specifications = specifications;
 
-    await this.carsRepository.create(carExists);
+    await this.carsRepository.create(car);
 
-    return carExists;
+    return car;
   }
 }
 
