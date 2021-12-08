@@ -12,7 +12,7 @@ export async function ensureAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction
-) {
+): Promise<NextFunction | AppError | void> {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
