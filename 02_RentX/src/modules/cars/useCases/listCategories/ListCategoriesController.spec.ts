@@ -13,11 +13,11 @@ describe("Create Category Controller", () => {
     await connection.runMigrations();
 
     const id = randomUUID();
-    const password = await hash("admin", 8);
+    const password = await hash("admin2", 8);
 
     await connection.query(
       `INSERT INTO USERS(id, name, email, password, "isAdmin", created_at, driver_license )
-        values('${id}', 'admin', 'admin@rentx.com.br', '${password}', true, 'now()', 'XXXXXX')
+        values('${id}', 'admin2', 'admin2@rentx.com.br', '${password}', true, 'now()', 'XXXXXX')
       `
     );
   });
@@ -29,17 +29,18 @@ describe("Create Category Controller", () => {
 
   it("should be able to list all categories ", async () => {
     const responseToken = await request(app).post("/sessions").send({
-      email: "admin@rentx.com.br",
-      password: "admin",
+      email: "admin2@rentx.com.br",
+      password: "admin2",
     });
 
     const { token } = responseToken.body;
+    console.log("🚀 ~ token", token);
 
     await request(app)
       .post("/categories")
       .send({
-        name: "Category Supertest",
-        description: "Category Supertest",
+        name: "Category Supertest 3",
+        description: "Category Supertest 3",
       })
       .set({
         Authorization: `Bearer ${token}`,
@@ -50,6 +51,6 @@ describe("Create Category Controller", () => {
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(1);
     expect(response.body[0]).toHaveProperty("id");
-    expect(response.body[0].name).toEqual("Category Supertest");
+    expect(response.body[0].name).toEqual("Category Supertest 3");
   });
 });
