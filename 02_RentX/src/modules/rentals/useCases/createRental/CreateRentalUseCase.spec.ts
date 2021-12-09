@@ -4,9 +4,11 @@ import { CreateRentalUseCase } from "./CreateRentalUseCase";
 import { RentalsRepositoryInMemory } from "@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory";
 import { DayJsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayJsDateProvider";
 import { AppError } from "@shared/errors/AppError";
+import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
 
 let createRentalUseCase: CreateRentalUseCase;
 let rentalsRepositoryInMemory: RentalsRepositoryInMemory;
+let carsRepositoryInMemory: CarsRepositoryInMemory;
 let dayJsDateProvider: DayJsDateProvider;
 
 describe("Create Rental", () => {
@@ -14,10 +16,12 @@ describe("Create Rental", () => {
 
   beforeEach(() => {
     rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
+    carsRepositoryInMemory = new CarsRepositoryInMemory();
     dayJsDateProvider = new DayJsDateProvider();
     createRentalUseCase = new CreateRentalUseCase(
       rentalsRepositoryInMemory,
-      dayJsDateProvider
+      dayJsDateProvider,
+      carsRepositoryInMemory
     );
   });
 
