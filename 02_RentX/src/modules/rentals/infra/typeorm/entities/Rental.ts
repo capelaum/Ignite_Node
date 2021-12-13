@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { randomUUID } from "crypto";
+
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 
 @Entity("rentals")

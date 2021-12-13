@@ -1,4 +1,4 @@
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
@@ -11,6 +11,7 @@ interface IRequest {
   user_id: string;
 }
 
+@injectable()
 class DevolutionRentalUseCase {
   constructor(
     @inject("RentalsRepository")
@@ -39,8 +40,8 @@ class DevolutionRentalUseCase {
     );
 
     const delayDays = this.dateProvider.compareInDays(
-      this.dateProvider.dateNow(),
-      rental.expected_return_date
+      rental.expected_return_date,
+      this.dateProvider.dateNow()
     );
 
     const dailyDays = rentedDays <= 0 ? minDaily : rentedDays;
