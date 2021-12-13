@@ -25,7 +25,7 @@ describe("Create Rental", () => {
     );
   });
 
-  it("should be able to create a new rental", async () => {
+  it("Should be able to create a new rental", async () => {
     const car = await carsRepositoryInMemory.create({
       name: "Test",
       description: "Car Test",
@@ -46,11 +46,11 @@ describe("Create Rental", () => {
     expect(rental).toHaveProperty("start_date");
   });
 
-  it("should not be able to create a new rental related to an user with an open rent in progress", async () => {
+  it("Should not be able to create a new rental related to an user with an open rent in progress", async () => {
     await rentalsRepositoryInMemory.create({
+      user_id: "12345",
       car_id: "1111",
       expected_return_date: dayAdd24Hours,
-      user_id: "12345",
     });
 
     await expect(
@@ -64,7 +64,7 @@ describe("Create Rental", () => {
     );
   });
 
-  it("should not be able to create a new rental related to a car already rented", async () => {
+  it("Should not be able to create a new rental related to a car already rented", async () => {
     await rentalsRepositoryInMemory.create({
       user_id: "12345",
       car_id: "test",
@@ -80,7 +80,7 @@ describe("Create Rental", () => {
     ).rejects.toEqual(new AppError("Car is not available 😕"));
   });
 
-  it("should not be able to create a new rental for a period less than 24 hours", async () => {
+  it("Should not be able to create a new rental for a period less than 24 hours", async () => {
     await expect(
       createRentalUseCase.execute({
         user_id: "123",

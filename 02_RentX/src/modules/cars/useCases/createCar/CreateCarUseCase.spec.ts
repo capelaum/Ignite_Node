@@ -11,7 +11,7 @@ describe("Create Car", () => {
     createCarUseCase = new CreateCarUseCase(carsRepositoryInMemory);
   });
 
-  it("should be able to create a new car", async () => {
+  it("Should be able to create a new car", async () => {
     const car = await createCarUseCase.execute({
       name: "Fusca",
       description: "Carro legal",
@@ -25,19 +25,19 @@ describe("Create Car", () => {
     expect(car).toHaveProperty("id");
   });
 
-  it("should not be able to create a car with existent license plate", async () => {
-    expect(async () => {
-      await createCarUseCase.execute({
-        name: "Fusca",
-        description: "Carro legal",
-        daily_rate: 100,
-        license_plate: "ABC-1234",
-        fine_amount: 60,
-        brand: "Volkswagen",
-        category_id: "category_id",
-      });
+  it("Should not be able to create a car with existent license plate", async () => {
+    await createCarUseCase.execute({
+      name: "Fusca",
+      description: "Carro legal",
+      daily_rate: 100,
+      license_plate: "ABC-1234",
+      fine_amount: 60,
+      brand: "Volkswagen",
+      category_id: "category_id",
+    });
 
-      await createCarUseCase.execute({
+    expect(
+      createCarUseCase.execute({
         name: "Fusca 2",
         description: "Carro legal",
         daily_rate: 100,
@@ -45,11 +45,11 @@ describe("Create Car", () => {
         fine_amount: 60,
         brand: "Volkswagen",
         category_id: "category_id",
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      })
+    ).rejects.toEqual(new AppError("Car already exists"));
   });
 
-  it("should not be able to create a car with with true availbility by default", async () => {
+  it("Should not be able to create a car with with true availbility by default", async () => {
     const car = await createCarUseCase.execute({
       name: "Car available",
       description: "Car Description",
