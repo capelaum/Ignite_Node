@@ -5,7 +5,7 @@
     "description": "This is a Rent Car API",
     "version": "1.0.0",
     "contact": {
-      "name": "RentalX",
+      "name": "RentX",
       "url": "http://rentx.com",
       "email": "thecapellett@gmail.com"
     }
@@ -16,6 +16,11 @@
         "tags": ["Category"],
         "summary": "Create new category",
         "description": "Create new car category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -43,7 +48,7 @@
           "201": {
             "description": "Success: Created Category"
           },
-          "500": {
+          "400": {
             "description": "Category already exists"
           }
         }
@@ -90,6 +95,11 @@
         "tags": ["Category"],
         "summary": "Import categories",
         "description": "Import categories",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -117,6 +127,11 @@
         "tags": ["Specifications"],
         "summary": "Create new specification",
         "description": "Create new car specification",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -135,6 +150,38 @@
           }
         }
       }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["Session"],
+        "summary": "Authentication user",
+        "description": "Authentication user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success: Created Session"
+          },
+          "400": {
+            "description": "Email or password is incorrect!"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -147,6 +194,15 @@
         "description": {
           "type": "string"
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
