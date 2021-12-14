@@ -24,6 +24,7 @@ class RefreshTokenUseCase {
 
   async execute(token: string) {
     const {
+      secret_token,
       secret_refresh_token,
       expires_in_refrest_token,
       expires_refresh_token_days,
@@ -59,7 +60,15 @@ class RefreshTokenUseCase {
       expires_date,
     });
 
-    return refresh_token;
+    const newToken = sign({}, secret_token, {
+      subject: user_id,
+      expiresIn: auth.expires_in_token,
+    });
+
+    return {
+      refresh_token,
+      token: newToken,
+    };
   }
 }
 

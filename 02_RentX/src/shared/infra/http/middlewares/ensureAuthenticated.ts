@@ -19,12 +19,12 @@ export async function ensureAuthenticated(
   const authHeader = req.headers.authorization;
   const usersTokenRepository = new UsersTokenRepository();
 
-  if (!authHeader) {
-    throw new AppError("Token not provided", 401);
-  }
-
   // Destruct Bearer Token
   const [, token] = authHeader.split(" ");
+
+  if (!authHeader || !token) {
+    throw new AppError("Token not provided", 401);
+  }
 
   try {
     const { sub: user_id } = verify(
@@ -32,7 +32,7 @@ export async function ensureAuthenticated(
       auth.secret_refresh_token
     ) as IPayload;
 
-    const user = usersTokenRepository.findByUserIdAndRefreshToken(
+    const user = await usersTokenRepository.findByUserIdAndRefreshToken(
       user_id,
       token
     );

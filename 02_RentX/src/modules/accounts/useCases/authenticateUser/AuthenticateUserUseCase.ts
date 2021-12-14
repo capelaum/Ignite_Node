@@ -2,10 +2,11 @@ import { inject, injectable } from "tsyringe";
 import { sign } from "jsonwebtoken";
 import { compare } from "bcrypt";
 
-import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
-import { IUsersTokenRepository } from "@modules/accounts/repositories/IUsersTokenRepository";
 import auth from "@config/auth";
+import { AppError } from "@shared/errors/AppError";
+
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUsersTokenRepository } from "@modules/accounts/repositories/IUsersTokenRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 
 interface IRequest {
@@ -37,7 +38,6 @@ class AuthenticateUserUseCase {
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
-
     const {
       secret_token,
       expires_in_token,
