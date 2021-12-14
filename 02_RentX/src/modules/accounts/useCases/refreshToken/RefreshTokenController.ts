@@ -12,7 +12,7 @@ class RefreshTokenController {
 
     const refresh_token = await refreshTokenUseCase.execute(token);
 
-    return res.json({ refresh_token: refresh_token });
+    return res.json(refresh_token);
   }
 }
 
