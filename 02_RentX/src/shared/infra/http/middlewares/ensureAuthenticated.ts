@@ -23,20 +23,20 @@ export async function ensureAuthenticated(
   const [, token] = authHeader.split(" ");
 
   try {
-    const { sub: userId } = verify(
+    const { sub: user_id } = verify(
       token,
       "a9dd3ee39151bda3a1960558e36dea9e"
     ) as IPayload;
 
     const usersRepository = new UsersRepository();
-    const user = usersRepository.findById(userId);
+    const user = usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError("User not found", 401);
     }
 
     req.user = {
-      id: userId,
+      id: user_id,
     };
 
     return next();

@@ -22,7 +22,7 @@ class UsersToken {
   user_id: string;
 
   @ManyToOne(() => User)
-  @JoinColumn()
+  @JoinColumn({ name: "user_id" })
   user: User;
 
   @Column()

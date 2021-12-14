@@ -10,7 +10,7 @@ class UpdateUserAvatarController {
 
     const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase);
 
-    await updateUserAvatarUseCase.execute({ userId: id, avatarFile });
+    await updateUserAvatarUseCase.execute({ user_id: id, avatarFile });
 
     return res.status(200).json({ message: "Avatar atualizado com sucesso" });
   }
