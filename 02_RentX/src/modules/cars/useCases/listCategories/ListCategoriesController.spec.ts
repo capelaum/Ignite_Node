@@ -1,7 +1,7 @@
 import { hash } from "bcrypt";
+import { randomUUID } from "crypto";
 import request from "supertest";
 import { Connection } from "typeorm";
-import { randomUUID } from "crypto";
 
 import { app } from "@shared/infra/http/app";
 import createConnection from "@shared/infra/typeorm";
@@ -33,7 +33,7 @@ describe("Create Category Controller", () => {
       password: "admin",
     });
 
-    const { token } = responseToken.body;
+    const { refresh_token } = responseToken.body;
 
     await request(app)
       .post("/categories")
@@ -42,7 +42,7 @@ describe("Create Category Controller", () => {
         description: "Category Supertest",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refresh_token}`,
       });
 
     const response = await request(app).get("/categories");
