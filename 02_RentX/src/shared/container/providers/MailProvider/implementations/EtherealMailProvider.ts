@@ -3,7 +3,7 @@ import handlebars from "handlebars";
 import nodemailer, { Transporter } from "nodemailer";
 import { injectable } from "tsyringe";
 
-import { IMailProvider } from "../IMailProvider";
+import { IMailProvider, IVariables } from "../IMailProvider";
 
 @injectable()
 class EtherealMailProvider implements IMailProvider {
@@ -31,7 +31,7 @@ class EtherealMailProvider implements IMailProvider {
   async sendMail(
     to: string,
     subject: string,
-    variables: any,
+    variables: IVariables,
     path: string
   ): Promise<void> {
     const templateFileContent = fs.readFileSync(path, { encoding: "utf-8" });

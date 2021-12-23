@@ -1,8 +1,13 @@
+export interface IVariables {
+  name: string;
+  link: string;
+}
+
 interface IMailProvider {
   sendMail(
     to: string,
     subject: string,
-    variables: any,
+    variables: IVariables,
     path: string
   ): Promise<void>;
 }
