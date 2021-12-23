@@ -100,7 +100,7 @@
 
 - [x] Deve ser possível o usuário recuperar a senha informando o e-mail
 - [x] O usuário deve receber um e-mail com o passo a passo para a recuperação da senha
-- [ ] O usuário deve conseguir inserir uma nova senha
+- [x] O usuário deve conseguir inserir uma nova senha
 
 **RN**
 
