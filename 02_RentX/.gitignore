@@ -7,6 +7,7 @@ ormconfig.json
 package-lock.json
 yarn-error.log
 
+tmp/*
 tmp/avatar/*
 tmp/carImages/*
 
