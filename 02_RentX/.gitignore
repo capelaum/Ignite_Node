@@ -7,9 +7,8 @@ ormconfig.json
 package-lock.json
 yarn-error.log
 
-tmp/*
 tmp/avatar/*
-tmp/carImages/*
+tmp/car_images/*
 
 !tmp/avatar/.gitkeep
-!tmp/carImages/.gitkeep
+!tmp/car_images/.gitkeep
