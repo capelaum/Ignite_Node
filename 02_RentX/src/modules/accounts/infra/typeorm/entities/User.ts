@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Expose } from "class-transformer";
 import { randomUUID } from "crypto";
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 
 @Entity("users")
 class User {
@@ -26,6 +27,18 @@ class User {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @Expose({ name: "avatar_url" })
+  avatar_url(): string {
+    switch (process.env.storage) {
+      case "local":
+        return `${process.env.APP_API_URL}/avatar/${this.avatar}`;
+      case "s3":
+        return `${process.env.AWS_BUCKET_URL}/avatar/${this.avatar}`;
+      default:
+        return null;
+    }
+  }
 
   constructor() {
     if (!this.id) {
