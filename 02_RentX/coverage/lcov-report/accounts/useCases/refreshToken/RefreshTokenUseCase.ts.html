@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">29.33% </span>
+                <span class="strong">32.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/75</span>
+                <span class='fraction'>26/80</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">29.33% </span>
+                <span class="strong">32.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/75</span>
+                <span class='fraction'>26/80</span>
             </div>
         
             
@@ -138,7 +138,12 @@
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -155,6 +160,10 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -210,21 +219,26 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inject, injectable } from "tsyringe";
-import { sign, verify } from "jsonwebtoken";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { sign, verify } from "jsonwebtoken";
+import { inject, injectable } from "tsyringe";
 &nbsp;
 import auth from "@config/auth";
-import { AppError } from "@shared/errors/AppError";
-&nbsp;
 import { IUsersTokenRepository } from "@modules/accounts/repositories/IUsersTokenRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { AppError } from "@shared/errors/AppError";
 &nbsp;
 interface IPayload {
   sub: string;
   email: string;
+}
+&nbsp;
+interface ITokenResponse {
+  token: string;
+  refresh_token: string;
 }
 &nbsp;
 @injectable()
@@ -237,9 +251,10 @@ class RefreshTokenUseCase {
 <span class="cstat-no" title="statement not covered" >    private dateProvider: IDateProvider</span>
 <span class="cstat-no" title="statement not covered" >  ) {}</span>
 &nbsp;
-  async <span class="fstat-no" title="function not covered" >execute(token: string) {</span>
+  async <span class="fstat-no" title="function not covered" >execute(token: string): Promise&lt;ITokenResponse&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    const {</span>
 <span class="cstat-no" title="statement not covered" >      secret_token,</span>
+<span class="cstat-no" title="statement not covered" >      expires_in_token,</span>
 <span class="cstat-no" title="statement not covered" >      secret_refresh_token,</span>
 <span class="cstat-no" title="statement not covered" >      expires_in_refrest_token,</span>
 <span class="cstat-no" title="statement not covered" >      expires_refresh_token_days,</span>
@@ -277,7 +292,7 @@ class RefreshTokenUseCase {
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const newToken = sign({}, secret_token, {</span>
 <span class="cstat-no" title="statement not covered" >      subject: user_id,</span>
-<span class="cstat-no" title="statement not covered" >      expiresIn: auth.expires_in_token,</span>
+<span class="cstat-no" title="statement not covered" >      expiresIn: expires_in_token,</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
@@ -295,7 +310,7 @@ export { RefreshTokenUseCase };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener">istanbul</a>
-                at Thu Dec 23 2021 00:55:43 GMT-0300 (Brasilia Standard Time)
+                at Thu Dec 23 2021 11:44:18 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
