@@ -1,4 +1,14 @@
 node_modules
 .vscode
-tmp/*
+coverage
 .env
+dist
+ormconfig.json
+package-lock.json
+yarn-error.log
+
+tmp/avatar/*
+tmp/carImages/*
+
+!tmp/avatar/.gitkeep
+!tmp/carImages/.gitkeep
