@@ -2,7 +2,7 @@
   <img src=".github/ignite.svg" alt="WatchMe" width="150">
   <h1>Ignite - Node.js</h1>
   <h4>
-    Repositório do treinamento Ignite - Trilha Node.js
+    Repositório de alguns módulos e desafios do treinamento Ignite - Trilha Node.js -
     <a href="https://www.rocketseat.com.br" target="_blank">
       RocketSeat 🚀
     </a>
